@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace Complete
 {
@@ -61,21 +62,31 @@ namespace Complete
 
         private void Start ()
         {
-            // The axes names are based on player number.
-            m_MovementAxisName = "Vertical" + m_PlayerNumber;
-            m_TurnAxisName = "Horizontal" + m_PlayerNumber;
 
-            // Store the original pitch of the audio source.
-            m_OriginalPitch = m_MovementAudio.pitch;
+			// The axes names are based on player number.
+			m_MovementAxisName = "Vertical" + m_PlayerNumber;
+			m_TurnAxisName = "Horizontal" + m_PlayerNumber;
+
+
+
+			// Store the original pitch of the audio source.
+			m_OriginalPitch = m_MovementAudio.pitch;
         }
 
 
         private void Update ()
         {
-            // Store the value of both input axes.
-            m_MovementInputValue = Input.GetAxis (m_MovementAxisName);
-            m_TurnInputValue = Input.GetAxis (m_TurnAxisName);
 
+#if UNITY_EDITOR || UNITY_STANALONE || UNITY_WEBPLAYER
+            // Store the value of both input axes.
+            m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
+            m_TurnInputValue = Input.GetAxis(m_TurnAxisName );
+#else
+            // Mobile Input
+            m_MovementInputValue = CrossPlatformInputManager.GetAxisRaw(m_MovementAxisName);
+            m_TurnInputValue = CrossPlatformInputManager.GetAxisRaw(m_TurnAxisName); 
+#endif
+			
             EngineAudio ();
         }
 
