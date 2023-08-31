@@ -77,9 +77,9 @@ namespace Complete
         private void Update ()
         {
 
-#if UNITY_EDITOR || UNITY_STANALONE || UNITY_WEBPLAYER
-            // Store the value of both input axes.
-            m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
+#if UNITY_EDITOR || UNITY_STANDALONE
+			// Store the value of both input axes.
+			m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
             m_TurnInputValue = Input.GetAxis(m_TurnAxisName );
 #else
             // Mobile Input

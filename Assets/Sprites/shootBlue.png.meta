@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 77edead0ae7d4b3479751906fdfce10b
+guid: 20c8a02af4b843645b883b77c9892ad3
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: contol bg_0
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -98,21 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: contol bg_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 225
-        height: 225
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
     physicsShape: []
   spritePackingTag: 

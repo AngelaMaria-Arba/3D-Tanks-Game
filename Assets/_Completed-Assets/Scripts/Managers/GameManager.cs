@@ -26,7 +26,7 @@ namespace Complete
 		private TankManager m_RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
 		private TankManager m_GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
 
-#if !UNITY_EDITOR || !UNITY_STANALONE || !UNITY_WEBPLAYER
+#if !UNITY_EDITOR || !UNITY_STANDALONE
 		public GameObject RedJoystick;
 		public GameObject BlueJoystick;
 
@@ -39,7 +39,7 @@ namespace Complete
 #endif
 		private void Start()
 		{
-			version.text = "Version : " + Application.version + "  ";
+			version.text = "Version : " + Application.version + "    ";
 			Debug.Log("Application Version : " + Application.version);
 
 			// Create the delays so they only have to be made once.
@@ -65,7 +65,7 @@ namespace Complete
 				m_Tanks[i].m_PlayerNumber = i + 1;
 				// m_Tanks[i].m_Joystick = Instantiate(joyStick, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject; // for loop
 				//m_Tanks[i].m_Joystick.GetComponentInChildren<Joystick>().m_PlayerNumber = i + 1; // for loop
-#if !UNITY_EDITOR || !UNITY_STANALONE || !UNITY_WEBPLAYER
+#if !UNITY_EDITOR || !UNITY_STANDALONE
 				if (i == 0)
 					m_Tanks[i].m_Joystick = BlueJoystick;
 				else
