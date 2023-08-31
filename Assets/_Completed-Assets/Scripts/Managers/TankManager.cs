@@ -23,7 +23,7 @@ namespace Complete
 		private TankMovement m_Movement;                        // Reference to tank's movement script, used to disable and enable control.
 		private TankShooting m_Shooting;                        // Reference to tank's shooting script, used to disable and enable control.
 		private GameObject m_CanvasGameObject;                  // Used to disable the world space UI during the Starting and Ending phases of each round.
-#if !UNITY_EDITOR || !UNITY_STANALONE || !UNITY_WEBPLAYER
+#if !UNITY_EDITOR || !UNITY_STANDALONE
 		[HideInInspector] public GameObject m_Joystick;
 #endif
 		public void Setup()
@@ -60,7 +60,7 @@ namespace Complete
 			m_Shooting.enabled = false;
 
 
-#if !UNITY_EDITOR || !UNITY_STANALONE || !UNITY_WEBPLAYER
+#if !UNITY_EDITOR || !UNITY_STANDALONE
 			m_Joystick.SetActive(false);
 #endif
 			m_CanvasGameObject.SetActive(false);
@@ -72,7 +72,7 @@ namespace Complete
 		{
 			m_Movement.enabled = true;
 			m_Shooting.enabled = true;
-#if !UNITY_EDITOR || !UNITY_STANALONE || !UNITY_WEBPLAYER
+#if !UNITY_EDITOR || !UNITY_STANDALONE
 			m_Joystick.SetActive(true);
 #endif
 			m_CanvasGameObject.SetActive(true);

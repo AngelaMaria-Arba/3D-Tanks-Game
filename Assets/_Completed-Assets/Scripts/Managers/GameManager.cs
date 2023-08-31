@@ -29,6 +29,8 @@ namespace Complete
 #if !UNITY_EDITOR || !UNITY_STANALONE || !UNITY_WEBPLAYER
 		public GameObject RedJoystick;
 		public GameObject BlueJoystick;
+
+
 		private void OnEnable()
 		{
 			RedJoystick.GetComponentInChildren<Joystick>().m_PlayerNumber = 2;
@@ -38,8 +40,8 @@ namespace Complete
 		private void Start()
 		{
 			version.text = "Version : " + Application.version + "  ";
-			//This will print whatever is in Edit>Project Settings>Player>Version (by default 0.1)
 			Debug.Log("Application Version : " + Application.version);
+
 			// Create the delays so they only have to be made once.
 			m_StartWait = new WaitForSeconds(m_StartDelay);
 			m_EndWait = new WaitForSeconds(m_EndDelay);
