@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,8 +22,8 @@ namespace Complete
 		private WaitForSeconds m_EndWait;           // Used to have a delay whilst the round or game ends.
 		private TankManager m_RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
 		private TankManager m_GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
-
-#if UNITY_EDITOR || UNITY_STANDALONE
+		
+#if UNITY_STANDALONE
 #else												// Reference to the joysticks
 		public GameObject RedJoystick;		
 		public GameObject BlueJoystick;
@@ -58,7 +59,7 @@ namespace Complete
 					Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
 				m_Tanks[i].m_PlayerNumber = i + 1;
               
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_STANDALONE
 #else									
 				// Assign joysticks to the tanks
 				if (i == 0)
