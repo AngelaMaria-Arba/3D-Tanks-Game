@@ -15,8 +15,7 @@ namespace Complete
 		public Text m_MessageText;                  // Reference to the overlay Text to display winning text, etc.
 		public GameObject m_TankPrefab;             // Reference to the prefab the players will control.
 		public TankManager[] m_Tanks;               // A collection of managers for enabling and disabling different aspects of the tanks.
-		public Text version;
-		
+
 		// public GameObject joyStick;              // for loop
 
 
@@ -39,9 +38,7 @@ namespace Complete
 #endif
 		private void Start()
 		{
-			version.text = "Version : " + Application.version + "    ";
-			Debug.Log("Application Version : " + Application.version);
-
+		
 			// Create the delays so they only have to be made once.
 			m_StartWait = new WaitForSeconds(m_StartDelay);
 			m_EndWait = new WaitForSeconds(m_EndDelay);
@@ -109,7 +106,7 @@ namespace Complete
 			if (m_GameWinner != null)
 			{
 				// If there is a game winner, restart the level.
-				SceneManager.LoadScene(0);
+				SceneManager.LoadScene(1);
 			}
 			else
 			{
