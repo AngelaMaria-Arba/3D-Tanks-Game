@@ -7,18 +7,18 @@ using UnityEngine.SceneManagement;
 public class IntroScene : MonoBehaviour {
 
 	public Text version;
-	// Use this for initialization
+
 	private void Start () {
 
-		version.text = "Version : " + Application.version + "    ";
-		Debug.Log("Application Version : " + Application.version);
+		version.text = "Version : " + Application.version + "    "; // Displays the varion of the Application
+		Debug.Log("Application Version : " + Application.version); 
 	}
 	
 	// To PlayGame
 	public void PlayGame()
 	{
 		Debug.Log("Play");
-		SceneManager.LoadScene(1);
+		SceneManager.LoadScene(1); // Loads the game scene
 	}
 	
 }

@@ -27,8 +27,8 @@ namespace UnityStandardAssets.CrossPlatformInput
 
 		void OnEnable()
 		{
-			horizontalAxisName = "Horizontal" + m_PlayerNumber; verticalAxisName = "Vertical" + m_PlayerNumber;
-			CreateVirtualAxes();
+			horizontalAxisName = "Horizontal" + m_PlayerNumber; verticalAxisName = "Vertical" + m_PlayerNumber; //To create axis for the cross platform input for each playes
+            CreateVirtualAxes();
 		}
 
 		void Start()

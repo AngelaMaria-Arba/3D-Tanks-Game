@@ -10,14 +10,11 @@ namespace Complete
 	{
 		public int m_NumRoundsToWin = 5;            // The number of rounds a single player has to win to win the game.
 		public float m_StartDelay = 3f;             // The delay between the start of RoundStarting and RoundPlaying phases.
-		public float m_EndDelay = 3f;               // The delay between the end of RoundPlaying and RoundEnding phases.
+		public float m_EndDelay = 4f;               // The delay between the end of RoundPlaying and RoundEnding phases.
 		public CameraControl m_CameraControl;       // Reference to the CameraControl script for control during different phases.
 		public Text m_MessageText;                  // Reference to the overlay Text to display winning text, etc.
 		public GameObject m_TankPrefab;             // Reference to the prefab the players will control.
 		public TankManager[] m_Tanks;               // A collection of managers for enabling and disabling different aspects of the tanks.
-
-		// public GameObject joyStick;              // for loop
-
 
 		private int m_RoundNumber;                  // Which round the game is currently on.
 		private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
@@ -25,18 +22,18 @@ namespace Complete
 		private TankManager m_RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
 		private TankManager m_GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
 
-#if !UNITY_EDITOR || !UNITY_STANDALONE
-		public GameObject RedJoystick;
+#if UNITY_EDITOR || UNITY_STANDALONE
+#else												// Reference to the joysticks
+		public GameObject RedJoystick;		
 		public GameObject BlueJoystick;
 
-
-		private void OnEnable()
+		private void OnEnable()						// Assigns PlayerNumber to each joystick
 		{
 			RedJoystick.GetComponentInChildren<Joystick>().m_PlayerNumber = 2;
 			BlueJoystick.GetComponentInChildren<Joystick>().m_PlayerNumber = 1;
 		}
 #endif
-		private void Start()
+        private void Start()
 		{
 		
 			// Create the delays so they only have to be made once.
@@ -60,15 +57,16 @@ namespace Complete
 				m_Tanks[i].m_Instance =
 					Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
 				m_Tanks[i].m_PlayerNumber = i + 1;
-				// m_Tanks[i].m_Joystick = Instantiate(joyStick, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject; // for loop
-				//m_Tanks[i].m_Joystick.GetComponentInChildren<Joystick>().m_PlayerNumber = i + 1; // for loop
-#if !UNITY_EDITOR || !UNITY_STANDALONE
+              
+#if UNITY_EDITOR || UNITY_STANDALONE
+#else									
+				// Assign joysticks to the tanks
 				if (i == 0)
 					m_Tanks[i].m_Joystick = BlueJoystick;
 				else
 					m_Tanks[i].m_Joystick = RedJoystick;
 #endif
-				m_Tanks[i].Setup();
+                m_Tanks[i].Setup();
 			}
 		}
 
@@ -236,25 +234,34 @@ namespace Complete
 		{
 			// By default when a round ends there are no winners so the default end message is a draw.
 			string message = "DRAW!";
-
+			
 			// If there is a winner then change the message to reflect that.
 			if (m_RoundWinner != null)
 				message = m_RoundWinner.m_ColoredPlayerText + " WINS THE ROUND!";
 
-			// Add some line breaks after the initial message.
-			message += "\n\n\n\n";
+			message += "\n\n";
 
 			// Go through all the tanks and add each of their scores to the message.
 			for (int i = 0; i < m_Tanks.Length; i++)
 			{
-				message += m_Tanks[i].m_ColoredPlayerText + ": " + m_Tanks[i].m_Wins + " WINS\n";
+				message += m_Tanks[i].m_ColoredPlayerText + " : " + m_Tanks[i].m_Wins + " WINS\n";
 			}
 
 			// If there is a game winner, change the entire message to reflect that.
 			if (m_GameWinner != null)
 				message = m_GameWinner.m_ColoredPlayerText + " WINS THE GAME!";
+			
+			message += "\n DAMAGE: \n";
 
-			return message;
+            // Go through all the tanks and collect there Damage percentage.
+            for (int i = 0; i < m_Tanks.Length; i++)
+            {
+                int value = m_Tanks[i].m_Instance.GetComponent<TankHealth>().DamagePercentage();
+                message += m_Tanks[i].m_ColoredPlayerText + " : " + value + "% \n";
+            }
+            // Add some line breaks after the initial message.
+            message += "\n";
+            return message;
 		}
 
 

@@ -12,26 +12,29 @@ namespace Complete
 		// and whether or not players have control of their tank in the 
 		// different phases of the game.
 
+
 		public Color m_PlayerColor;                             // This is the color this tank will be tinted.
 		public Transform m_SpawnPoint;                          // The position and direction the tank will have when it spawns.
 		[HideInInspector] public int m_PlayerNumber;            // This specifies which player this the manager for.
 		[HideInInspector] public string m_ColoredPlayerText;    // A string that represents the player with their number colored to match their tank.
 		[HideInInspector] public GameObject m_Instance;         // A reference to the instance of the tank when it is created.
 		[HideInInspector] public int m_Wins;                    // The number of wins this player has so far.
+		//[HideInInspector] public float m_health;
+        //[HideInInspector] private TankHealth m_Health;			// Reference to tank's shooting script, used to collect current health.	
 
-
-		private TankMovement m_Movement;                        // Reference to tank's movement script, used to disable and enable control.
-		private TankShooting m_Shooting;                        // Reference to tank's shooting script, used to disable and enable control.
+        private TankMovement m_Movement;                        // Reference to tank's movement script, used to disable and enable control.
+		private TankShooting m_Shooting;                        // Reference to tank's shooting script, used to disable and enable control.		
 		private GameObject m_CanvasGameObject;                  // Used to disable the world space UI during the Starting and Ending phases of each round.
-
-#if !UNITY_EDITOR || !UNITY_STANDALONE
-		[HideInInspector] public GameObject m_Joystick;
+#if UNITY_EDITOR || UNITY_STANDALONE
+#else
+         public GameObject m_Joystick;
 #endif
 		public void Setup()
 		{
 			// Get references to the components.
 			m_Movement = m_Instance.GetComponent<TankMovement>();
 			m_Shooting = m_Instance.GetComponent<TankShooting>();
+			//m_Health = m_Instance.GetComponent<TankHealth>();
 			m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
 
 			// Set the player numbers to be consistent across the scripts.
@@ -61,8 +64,9 @@ namespace Complete
 			m_Shooting.enabled = false;
 
 
-#if !UNITY_EDITOR || !UNITY_STANDALONE
-			m_Joystick.SetActive(false);
+#if UNITY_EDITOR || UNITY_STANDALONE
+#else
+            m_Joystick.SetActive(false);
 #endif
 			m_CanvasGameObject.SetActive(false);
 		}
@@ -73,10 +77,11 @@ namespace Complete
 		{
 			m_Movement.enabled = true;
 			m_Shooting.enabled = true;
-#if !UNITY_EDITOR || !UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE
+#else
 			m_Joystick.SetActive(true);
 #endif
-			m_CanvasGameObject.SetActive(true);
+            m_CanvasGameObject.SetActive(true);
 		}
 
 

@@ -87,5 +87,19 @@ namespace Complete
             // Turn the tank off.
             gameObject.SetActive (false);
         }
+
+        // This function calculates and returns the Damage of the tanks
+        public int DamagePercentage() {
+            
+            int value = 0;
+            
+            if (m_CurrentHealth < 0)
+                value = 100;
+            else
+                value = 100 - (int)m_CurrentHealth;
+           
+            return value;
+        }
     }
+    
 }
