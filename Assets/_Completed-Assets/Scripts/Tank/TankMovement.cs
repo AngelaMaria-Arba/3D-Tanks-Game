@@ -20,6 +20,7 @@ namespace Complete
         private float m_TurnInputValue;             // The current value of the turn input.
         private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
+        private Transform m_Transform;
 
         private void Awake ()
         {
@@ -122,18 +123,44 @@ namespace Complete
         private void FixedUpdate ()
         {
             // Adjust the rigidbodies position and orientation in FixedUpdate.
-            Move ();
-            Turn ();
+#if UNITY_EDITOR || UNITY_STANDALONE
+            Move();
+            Turn();
+#else
+            // Mobile Input
+            MoveJoystick();
+#endif
+            
         }
 
 
         private void Move ()
         {
             // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-            Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
+           Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
 
             // Apply this movement to the rigidbody's position.
+           m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+         
+        }
+
+        private void MoveJoystick()
+        {
+            float x = m_TurnInputValue * m_Speed * Time.deltaTime;
+            float y = 0;
+            float z = m_MovementInputValue * m_Speed * Time.deltaTime;
+
+           
+            // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
+            Vector3 movement = new Vector3(x, y, z);
+            Vector3 t_movement = new Vector3(m_TurnInputValue* Time.deltaTime, y, m_MovementInputValue * Time.deltaTime);
+
+                
+            // Apply this movement to the rigidbody's position.
             m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+            if (m_MovementInputValue != 0 || m_TurnInputValue != 0)
+                m_Rigidbody.MoveRotation(Quaternion.LookRotation(t_movement));
+            
         }
 
 
